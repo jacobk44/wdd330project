@@ -9,15 +9,17 @@ function productCardTemplate(product) {
             discountHtml = `<span class="discount-badge">${discount}% OFF</span>`
         }
     }
-    return `<li class= "product-card">
-        <a href="product_pages/?product=${product.Id}">
-        <img src="${product.Image}" alt="${product.Name}">
-        ${discountHtml}
-        <h2 class="brand">${product.Brand.Name}"</h2>
-        <h3 class="product-name">${product.Name}</h3>
-        <p class="product-card_price">$${product.FinalPrice.toFixed(2)}</p>
-        </a>
-    </li>`
+    return `
+    <li class="product-card">
+      <a href="product_pages/?product=${product.Id}">
+        <img src="${product.Image}" alt="${product.Name}" />
+        <h2 class="card__brand">${product.Brand}</h2>
+        <h3 class="card__name">${product.Name}</h3>
+        <p class="product-card__price">$${product.Price}</p>
+        ${product.Discount ? `<span class="discount">${product.Discount} OFF</span>` : ""}
+      </a>
+    </li>
+  `;
 }
 
 
