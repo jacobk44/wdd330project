@@ -29,7 +29,9 @@ export default class ProductList {
     }
 
     async init() {
-        const list = await this.dataSource.getData();
+        let list = await this.dataSource.getData();
+        const allowedIds = ["880RR", "985RF", "985PR", "344YJ"];
+        list = list.filter(product => allowedIds.includes(product.Id))
         this.renderList(list);
     }
 
@@ -37,7 +39,7 @@ export default class ProductList {
     renderList(list) {
         // const htmlStrings = list.map(productCardTemplate);
         // this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join(''));
-
+        this.listElement.innerHTML = "";
         renderListWithTemplate(productCardTemplate, this.listElement, list);
     }
 }
