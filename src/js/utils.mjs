@@ -38,3 +38,36 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback){
+    callback(data);
+  }
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+export async function loadTemplate(path){
+  const res = await fetch(path);
+  const template = res.text();
+  return template;
+}
+
+export async function laodHeaderFoater(){
+  try {
+  const headerTemplate = await loadTemplate("/partial/header.html");
+  const footerTemplate = await loadTemplate("/partial/footer.html");
+
+  const headerEl = document.getElementById("main-header");
+  const footerEl = document.getElementById("main-footer");
+
+  if (!headerEl || footerEl){
+    console.log("PlaceHolder not found in the Dom");
+    return;
+  }
+  renderWithTemplate(headerTemplate,headerEl);
+  renderWithTemplate(headerTemplate,headerEl);
+  } catch (err){
+    console.log("Error loading header or footer", err)
+  }
+}

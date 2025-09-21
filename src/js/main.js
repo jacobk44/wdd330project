@@ -8,3 +8,6 @@ const element = document.querySelector(".product-list");
 const productList = new ProductList("Tents", dataSource, element);
 
 productList.init();
+
+import loadHaederFooter from "./utils.mjs";
+loadHaederFooter();
