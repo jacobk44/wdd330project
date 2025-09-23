@@ -32,8 +32,8 @@ renderCartContents();
 
 
 
-import ShoppingCart from "./shoppingCart.mjs";
+// import ShoppingCart from "./shoppingCart.mjs";
 
 
-const cart = new ShoppingCart("so-cart", document.querySelector("#cart-list"));
-cart.renderList();
+// const cart = new ShoppingCart("so-cart", document.querySelector("#cart-list"));
+// cart.renderList();
