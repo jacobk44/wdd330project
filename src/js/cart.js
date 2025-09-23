@@ -32,7 +32,7 @@ renderCartContents();
 
 
 
-import ShoppingCart from "../ShoppingCart.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
 
 
 const cart = new ShoppingCart("so-cart", document.querySelector("#cart-list"));
