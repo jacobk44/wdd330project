@@ -29,11 +29,3 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
-
-
-
-// import ShoppingCart from "./shoppingCart.mjs";
-
-
-// const cart = new ShoppingCart("so-cart", document.querySelector("#cart-list"));
-// cart.renderList();
