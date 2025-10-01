@@ -1,40 +1,43 @@
-// ShoppingCart.mjs
-import { renderListWithTemplate } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
-// template function for cart items
 function cartItemTemplate(item) {
-  return `
-    <li class="cart-item">
-      <img src="${item.Image}" alt="${item.Name}" class="cart-item_image">
-      <div class="cart-item_info">
-        <h3 class="cart-item_name">${item.Name}</h3>
-        <p class="cart-item_brand">${item.Brand?.Name || ""}</p>
-        <p class="cart-item_price">$${item.FinalPrice.toFixed(2)}</p>
-        <p class="cart-item_quantity">Qty: ${item.Quantity || 1}</p>
-      </div>
-    </li>
-  `;
+  const newItem = `<li class="cart-card divider">
+  <a href="#" class="cart-card__image">
+    <img
+      src="${item.Images.PrimaryMedium}"
+      alt="${item.Name}"
+    />
+  </a>
+  <a href="#">
+    <h2 class="card__name">${item.Name}</h2>
+  </a>
+  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__price">$${item.FinalPrice}</p>
+</li>`;
+
+  return newItem;
 }
 
 export default class ShoppingCart {
-  constructor(key, listElement) {
-    this.key = key; // e.g. "so-cart"
-    this.listElement = listElement;
+  constructor(key, parentSelector) {
+    this.key = key;
+    this.parentSelector = parentSelector;
+    this.total = 0;
   }
-
-  getCartContents() {
-    return JSON.parse(localStorage.getItem(this.key)) || [];
+  async init() {
+    const list = getLocalStorage(this.key);
+    this.calculateListTotal(list);
+    this.renderCartContents(list);
   }
-
-  renderList() {
-    const list = this.getCartContents();
-
-    this.listElement.innerHTML = ""; // clear first
-    if (list.length === 0) {
-      this.listElement.innerHTML = "<p>Your cart is empty.</p>";
-      return;
-    }
-
-    renderListWithTemplate(cartItemTemplate, this.listElement, list);
+  calculateListTotal(list) {
+    const amounts = list.map((item) => item.FinalPrice);
+    this.total = amounts.reduce((sum, item) => sum + item);
+  }
+  renderCartContents() {
+    const cartItems = getLocalStorage(this.key);
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(this.parentSelector).innerHTML = htmlItems.join("");
+    document.querySelector(".list-total").innerText += ` $${this.total}`;
   }
 }
