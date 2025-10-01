@@ -1,11 +1,16 @@
-import { getLocalStorage, loadHeaderFooter } from "/utils.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
 
 loadHeaderFooter();
 
-const cart = new ShoppingCart("so-cart", ".product-list");
-cart.init();
-if (cart.total > 0) {
-  // show our checkout button and total if there are items in the cart.
-  document.querySelector(".list-footer").classList.remove("hide");
+async function initCart() {
+  const cart = new ShoppingCart("so-cart", ".product-list");
+  await cart.init();
+
+  if (cart.total > 0) {
+    const footer = document.querySelector(".list-footer");
+    if (footer) footer.classList.remove("hide");
+  }
 }
+
+initCart();
